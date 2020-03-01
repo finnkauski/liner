@@ -34,9 +34,12 @@ def plot(values):
     plt.show()
 
 @click.command()
-@click.argument('directory', required=True)
 @click.argument('extensions', nargs=-1)
-def main(directory=".", extensions=[".py"]):
+@click.argument('directory', required=True)
+def main(extensions, directory="."):
+    if not extensions:
+        extensions = [".py"]
+        
     plot(unpack(process(map(readlines, getpaths(directory, extensions)))))
 
 
