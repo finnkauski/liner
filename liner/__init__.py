@@ -19,7 +19,7 @@ def unpack(lists):
     return [val for lst in lists for val in lst]
 
 
-def getpaths(directory, extensions=[".py"]):
+def getpaths(directory, extensions):
 
     return [
         os.path.join(r, file)
@@ -34,9 +34,10 @@ def plot(values):
     plt.show()
 
 @click.command()
-@click.argument('directory')
-def main(directory="."):
-    plot(unpack(process(map(readlines, getpaths(directory)))))
+@click.argument('directory', required=True)
+@click.argument('extensions', nargs=-1)
+def main(directory=".", extensions=[".py"]):
+    plot(unpack(process(map(readlines, getpaths(directory, extensions)))))
 
 
 if __name__=='__main__':
